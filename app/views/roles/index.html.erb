@@ -1,0 +1,14 @@
+<div class="jumbotron">
+	<h1>Hide Roles</h1>
+	<%= form_for :role, url: roles_update_status_path do |f| %>
+	  <%@roles.each do |role|%>
+		<div class="form-group">
+	    <label><%= role.name%></label>
+	 			<%= f.check_box("hide_status[#{role.id}]", {}, true, false)%>
+	 		</div>
+	 		<%end%>
+	 		<div class='form-group'>
+				<%= f.submit class: 'btn btn-primary'%>
+			</div>
+	<% end %>
+</div>

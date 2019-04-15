@@ -1,0 +1,32 @@
+<%= search_form_for @q , remote: true do |f| %>
+  <%= f.label :role_ids_cont_any, "Roles" %>
+  <%= f.select(:role_ids_cont_any, Role.nonhidden.collect {|u| [u.name, u.name]}, {:prompt => 'Select'}, {:multiple => true, class: 'form-control'}) %>
+  <%= f.submit "Search", class: 'btn btn-primary'%>
+<% end %>
+<table class='table table-bordered table-striped'>
+<thead>
+	<tr>
+		<th>Avatar</th>
+		<th><%= sort_link @q, :first_name %></th>
+		<th><%= sort_link @q, :last_name %></th>
+		<th>Roles</th>
+	</tr>
+</thead>
+<tbody>
+	<%users.each do |user|%>
+		<tr>
+			<td><%= image_tag user.avatar.url(:thumb) %></td>
+			<td><%= user.first_name%></td>
+			<td><%= user.last_name%></td>
+			<td><%= user.role_names%></td>
+		</tr>
+	<%end%>
+</tbody>
+</table>
+<%= paginate users, remote: true, class: 'btn' %>
+<script>
+$(document).on("click", ".sort_link",function(){
+	$.getScript(this.href);
+  return false;
+})
+</script>
